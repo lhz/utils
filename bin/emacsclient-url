@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+# Use emacsclient to open files pointed to by URIs on the form
+#
+#   emacs://open?url=file://%{file}&line=%{line}
+#
+# inside a running Emacs server.
+
+require 'uri'
+
+uri = ARGV[0]
+
+if uri.index('emacs://open?') == 0
+  file = uri.match(/(?<=[?&])url=file:\/\/([^&]+)/)[1]
+  line = uri.match(/(?<=[?&])line=(\d+)/)[1]
+  command, args = '/usr/bin/emacsclient', '-n'
+  args << " +#{line}" if line.to_i > 0
+  `#{command} #{args} "#{URI.unescape file}"`
+end

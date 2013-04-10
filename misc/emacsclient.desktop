@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=EmacsClient 
+GenericName=Emacs
+Comment=GNU Emacs Client Text Editor
+Exec=/home/lhz/bin/emacsclient-url %u
+Terminal=false
+Type=Application
+Icon=emacs-snapshot
+Categories=Development;Utility;TextEditor;
+MimeType=x-scheme-handler/emacs
+NoDisplay=true
+
