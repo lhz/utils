@@ -11,9 +11,10 @@ require 'uri'
 uri = ARGV[0]
 
 if uri.index('emacs://open?') == 0
-  file = uri.match(/(?<=[?&])url=file:\/\/([^&]+)/)[1]
-  line = uri.match(/(?<=[?&])line=(\d+)/)[1]
+  path = uri.scan(/(?<=[?&])url=file:\/\/([^&]+)/).flatten.first
+  line = uri.scan(/(?<=[?&])line=(\d+)/).flatten.first
   command, args = '/usr/bin/emacsclient', '-n'
   args << " +#{line}" if line.to_i > 0
-  `#{command} #{args} "#{URI.unescape file}"`
+  file = URI.unescape(path).gsub(/[^[:alnum:]\/_.,+-]/, '_')
+  `#{command} #{args} "#{file}"` if File.readable?(file)
 end
